@@ -1,20 +1,19 @@
 namespace Aoc.Day1
 
 module Part1 =
-    let removeSign a =
+    let removeSign a b =
         match a with
-        | a when a < 0 -> a * -1
-        | _ -> a
-
+        | a when a - b < 0 -> (a - b) * -1
+        | _ -> a - b
+    
     let getDifferencesBetween (list1: int list) (list2: int list) =
-        List.map (fun i -> removeSign (list1[i] - list2[i])) [ 0 .. list1.Length - 1 ]
+        List.map2 (fun item item2 -> removeSign item item2) list1 list2
 
     let addThemTogether list =
         List.reduce (fun current next -> current + next) list
 
     let doAllThatStuff list1 list2 =
         list1 |> List.sort |> getDifferencesBetween (List.sort list2) |> addThemTogether
-
 
 module Part2 =
     let numberOfOccurrencesInList (inputNumber: int) (list: int list) =
