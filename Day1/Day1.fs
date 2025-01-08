@@ -20,7 +20,7 @@ module Part2 =
         List.fold (fun total curr -> if curr = inputNumber then total + 1 else total) 0 list
 
     let doAllThatStuff list1 list2 =
-        let occ = List.map (fun x -> numberOfOccurrencesInList x list2) list1
-        let scores = List.map (fun i -> list1[i] * occ[i]) [ 0 .. list1.Length - 1 ]
+        let occurrences = List.map (fun i -> numberOfOccurrencesInList i list2) list1
+        let scores = List.map2 (fun i i2 -> i * i2) list1 occurrences
 
         List.reduce (fun curr next -> curr + next) scores
