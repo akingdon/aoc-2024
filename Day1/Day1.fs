@@ -1,12 +1,14 @@
 namespace Aoc.Day1
 
 module Part1 =
+    let getDistance (left, right) = left - right |> abs
+
     let getTotalDistance list1 list2 =
         list2
         |> List.sort
-        |> List.zip (List.sort list1)
-        |> List.map (fun (item1,item2) -> item1 - item2 |> abs)
-        |> List.reduce (fun curr next -> curr + next)
+        |> List.zip (list1 |> List.sort)
+        |> List.map getDistance
+        |> List.sum
 
 module Part2 =
     let (|MatchingPair|NoMatchingPair|) (left, right) =
