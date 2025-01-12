@@ -9,3 +9,6 @@ printfn $"Day 1 Part 2 result: {d1p2}"
 
 let d2p1 = Day2.Part1.doSomeStuff Day2.Inputs.listOfLists
 printfn $"Day 2 Part 1 result: {d2p1}"
+
+let d2p2 = Day2.Part2.doSomeStuff Day2.Inputs.listOfLists
+printfn $"Day 2 Part 2 result: {d2p2}. Totals: {d2p1 + d2p2}"
