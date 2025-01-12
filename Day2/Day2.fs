@@ -48,26 +48,20 @@ module Part1 =
         |> List.length
 
 module Part2 =
-    let getEqualDistancePair list =
-        list |> List.filter (fun x -> x |> Part1.getDistance = Part1.Equal)
+    let getAllPermutations list =
+        let length = list |> List.length
+        let indexer = [0 .. (length - 1)]
+        let perms = indexer |> List.map (fun i -> (list |> (List.removeAt i)))
+        perms
 
-    let reversePairwise list =
-        list |> List.map (fun x -> x |> fst)
-
-    let reportIsSafeWithProblemDampener report =
-        let pairs = report |> List.pairwise
-        let firstDirection = pairs |> Part1.initialDirection
-
-        let directionErrorsRemoved = pairs |> List.filter (fun x -> x |> Part1.getDirection = firstDirection)
-        let distanceErrorsRemoved = directionErrorsRemoved |> List.filter (fun x -> x |> Part1.validDistance)
-
-        let newReport = distanceErrorsRemoved |> reversePairwise
-        let newReportPasses = newReport |> Part1.reportIsSafe
-        let newReportHadOneErrorRemoved = (newReport |> List.length) - (report |> List.length) |> abs = 1
-
-        newReportPasses && newReportHadOneErrorRemoved
+    let anyPermWorks list =
+        let possibleOnes = list |> getAllPermutations
+        let succeeded = possibleOnes |> List.filter (fun l -> l |> Part1.reportIsSafe)
+        succeeded |> List.length > 0
 
     let doSomeStuff reports =
-        reports
-        |> List.filter (fun report -> report |> reportIsSafeWithProblemDampener)
+        let failingReports = reports |> List.filter (fun r -> Part1.reportIsSafe r <> true)
+
+        failingReports
+        |> List.filter (fun r -> r |> anyPermWorks)
         |> List.length
