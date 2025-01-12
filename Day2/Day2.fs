@@ -50,18 +50,18 @@ module Part1 =
 module Part2 =
     let getAllPermutations list =
         let length = list |> List.length
-        let indexer = [0 .. (length - 1)]
-        let perms = indexer |> List.map (fun i -> (list |> (List.removeAt i)))
-        perms
+        
+        [0 .. (length - 1)]
+        |> List.map (fun i -> (list |> (List.removeAt i)))
 
-    let anyPermWorks list =
-        let possibleOnes = list |> getAllPermutations
-        let succeeded = possibleOnes |> List.filter (fun l -> l |> Part1.reportIsSafe)
-        succeeded |> List.length > 0
+    let anyPermWorks report =
+        report
+        |> getAllPermutations
+        |> List.filter (fun report -> report |> Part1.reportIsSafe)
+        |> List.length > 0
 
     let doSomeStuff reports =
-        let failingReports = reports |> List.filter (fun r -> Part1.reportIsSafe r <> true)
-
-        failingReports
+        reports
+        |> List.filter (fun r -> Part1.reportIsSafe r <> true)
         |> List.filter (fun r -> r |> anyPermWorks)
         |> List.length
