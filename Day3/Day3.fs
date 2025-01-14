@@ -5,6 +5,7 @@ open System.Text.RegularExpressions
 module Part1 =
     let getMulFromInput = "mul\(\d+,\d+\)"
     let getNumbersFromMul = "(\d+,\d+)"
+    let fullRegex = "(mul\(\d*\,\d*\))|(do\(\))|(don\'t\(\))"
 
     let matches str = Regex.Matches(str, getMulFromInput)
 
