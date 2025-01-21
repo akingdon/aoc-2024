@@ -11,6 +11,8 @@
     <Compile Include="Day2\Inputs.fs" />
     <Compile Include="Day3\Inputs.fs" />
     <Compile Include="Day3\Day3.fs" />
+    <Compile Include="Day4\Inputs.fs" />
+    <Compile Include="Day4\Day4.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 </Project>
