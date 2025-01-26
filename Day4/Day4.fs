@@ -96,15 +96,27 @@ module Part2 =
     let forwards = ['M';'A';'S']
     let backwards = ['S';'A';'M']
 
-    let oneXMAS (strs: string list) =
+    let isBothForwards (strs: string list) =
         ((strs[0].[0] = forwards[0] && strs[1].[1] = forwards[1] && strs[2].[2] = forwards[2]) &&
-        (strs[2].[0] = forwards[0] && strs[1].[1] = forwards[1] && strs[0].[2] = forwards[2])) ||
+        (strs[2].[0] = forwards[0] && strs[1].[1] = forwards[1] && strs[0].[2] = forwards[2]))
+
+    let isBothBackwards (strs: string list) =
         ((strs[0].[0] = backwards[0] && strs[1].[1] = backwards[1] && strs[2].[2] = backwards[2]) &&
-        (strs[2].[0] = backwards[0] && strs[1].[1] = backwards[1] && strs[0].[2] = backwards[2])) ||
+        (strs[2].[0] = backwards[0] && strs[1].[1] = backwards[1] && strs[0].[2] = backwards[2]))
+
+    let isForwardsAndBackwards (strs: string list) =
         ((strs[0].[0] = backwards[0] && strs[1].[1] = backwards[1] && strs[2].[2] = backwards[2]) &&
-        (strs[2].[0] = forwards[0] && strs[1].[1] = forwards[1] && strs[0].[2] = forwards[2])) ||
+        (strs[2].[0] = forwards[0] && strs[1].[1] = forwards[1] && strs[0].[2] = forwards[2]))
+
+    let isBackwardsAndForwards (strs: string list) =
         ((strs[0].[0] = forwards[0] && strs[1].[1] = forwards[1] && strs[2].[2] = forwards[2]) &&
         (strs[2].[0] = backwards[0] && strs[1].[1] = backwards[1] && strs[0].[2] = backwards[2]))
+
+    let oneXMAS (strs: string list) =
+        isBothForwards strs ||
+        isBothBackwards strs ||
+        isForwardsAndBackwards strs ||
+        isBackwardsAndForwards strs
     
     let check3By3Grid (strs: string list) =
         let slidingSideways = strs[0].Length - 3
