@@ -19,7 +19,7 @@ module Part1 =
 
     let checkUpsAndDowns (strs: string list) =
         [ 0 .. strs[0].Length - 1 ]
-        |> List.map (fun x -> (checkDown strs x) || (checkUp strs x))
+        |> List.map (fun x -> checkDown strs x || checkUp strs x)
         |> List.filter isTrue
         |> List.length
 
@@ -37,7 +37,7 @@ module Part1 =
 
     let checkForeAndAft (str: string) =
         [ 0 .. str.Length - 4 ]
-        |> List.map (fun y -> (checkForwards str y) || (checkBackwards str y))
+        |> List.map (fun y -> checkForwards str y || checkBackwards str y)
         |> List.filter isTrue
         |> List.length
 
@@ -91,3 +91,39 @@ module Part1 =
         let singleLiners = strs |> List.map checkForeAndAft |> List.reduce addTogether
 
         multipleLiners + singleLiners
+
+module Part2 =
+    let forwards = ['M';'A';'S']
+    let backwards = ['S';'A';'M']
+
+    let oneXMAS (strs: string list) =
+        ((strs[0].[0] = forwards[0] && strs[1].[1] = forwards[1] && strs[2].[2] = forwards[2]) &&
+        (strs[2].[0] = forwards[0] && strs[1].[1] = forwards[1] && strs[0].[2] = forwards[2])) ||
+        ((strs[0].[0] = backwards[0] && strs[1].[1] = backwards[1] && strs[2].[2] = backwards[2]) &&
+        (strs[2].[0] = backwards[0] && strs[1].[1] = backwards[1] && strs[0].[2] = backwards[2])) ||
+        ((strs[0].[0] = backwards[0] && strs[1].[1] = backwards[1] && strs[2].[2] = backwards[2]) &&
+        (strs[2].[0] = forwards[0] && strs[1].[1] = forwards[1] && strs[0].[2] = forwards[2])) ||
+        ((strs[0].[0] = forwards[0] && strs[1].[1] = forwards[1] && strs[2].[2] = forwards[2]) &&
+        (strs[2].[0] = backwards[0] && strs[1].[1] = backwards[1] && strs[0].[2] = backwards[2]))
+    
+    let check3By3Grid (strs: string list) =
+        let slidingSideways = strs[0].Length - 3
+        let hits =
+            [ 0 .. slidingSideways ]
+            |> List.map (fun r ->
+            let checks =
+                [strs[0].[ r .. r + 2 ];
+                strs[1].[ r .. r + 2 ];
+                strs[2].[ r .. r + 2 ]]
+                
+            oneXMAS checks)
+
+        hits |> List.filter Part1.isTrue |> List.length
+
+    let stuffDoing (strs: string list) =
+        let multipleLiners =
+            [ 0 .. strs.Length - 3]
+            |> List.map (fun z -> check3By3Grid strs[ z .. z + 2])
+            |> List.reduce Part1.addTogether
+
+        multipleLiners

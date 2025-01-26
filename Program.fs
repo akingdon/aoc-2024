@@ -23,3 +23,6 @@ printfn $"Day 3 Part 2 result: {d3p2}"
 
 let d4p1 = Day4.Part1.doAFullRunOfAlls Day4.Inputs.actual
 printfn $"Day 4 Part 1 result: {d4p1}"
+
+let d4p2 = Day4.Part2.stuffDoing Day4.Inputs.actual
+printfn $"Day 4 Part 2 result: {d4p2}"
